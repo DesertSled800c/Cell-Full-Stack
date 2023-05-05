@@ -25,6 +25,7 @@ namespace Cell
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
 
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");

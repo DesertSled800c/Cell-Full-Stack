@@ -25,7 +25,7 @@ export default function Register() {
     <Form onSubmit={registerClick}>
       <fieldset>
         <FormGroup>
-          <Label htmlFor="fullName">Name</Label>
+          <Label htmlFor="fullName">Full-Name</Label>
           <Input
             id="fullName"
             type="text"

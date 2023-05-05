@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import Login from "./Login";
 import Register from "./Register";
+import GameList from "./Game/GameList";
+import UserGames from "./Game/UserGames";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -10,7 +11,11 @@ export default function ApplicationViews({ isLoggedIn }) {
       <Route path="/">
         <Route
           index
-          element={isLoggedIn ? <p>HEYYYYYYYYYY, somethings here...</p> : <Navigate to="/login" />}
+          element={isLoggedIn ? <GameList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="usergames"
+          element={isLoggedIn ? <UserGames /> : <Navigate to="/login" />}
         />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

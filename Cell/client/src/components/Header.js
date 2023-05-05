@@ -27,6 +27,11 @@ export default function Header({ isLoggedIn, userProfile }) {
             {isLoggedIn && (
               <>
                 <NavItem>
+                  <NavLink tag={RRNavLink} to="/usergames">
+                    My Games
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <a
                     aria-current="page"
                     className="nav-link"
@@ -64,11 +69,7 @@ export default function Header({ isLoggedIn, userProfile }) {
                 About
               </a>
             </NavItem>
-            {userProfile && (
-              <NavItem>
-                <NavLink>Welcome, {userProfile.fullName}!</NavLink>
-              </NavItem>
-            )}
+            {userProfile && <NavItem>Welcome, {userProfile.fullName}!</NavItem>}
           </Nav>
         </Collapse>
       </Navbar>

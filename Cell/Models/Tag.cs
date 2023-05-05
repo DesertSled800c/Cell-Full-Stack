@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Cell.Models
 {
@@ -8,7 +7,6 @@ namespace Cell.Models
         public int Id { get; set; }
 
         [Required]
-        [DisplayName("Tag Name")]
         public string Name { get; set; }
     }
 }
