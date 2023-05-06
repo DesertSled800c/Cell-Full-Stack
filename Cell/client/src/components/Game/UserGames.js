@@ -15,11 +15,11 @@ export default function UserGames() {
     <>
       <h1 className="text-center">List of my games!!!!!</h1>
       <section>
-        {games.map((g) => (
-          <Game key={g.id} game={g} />
-        ))}
+        {games.map((game) => (
+            <Game key={game.id} game={game} />
+            ))}
+            <GameForm />
       </section>
-      <GameForm />
     </>
   );
 }

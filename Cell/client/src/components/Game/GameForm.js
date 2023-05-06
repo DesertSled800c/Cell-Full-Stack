@@ -38,7 +38,7 @@ const GameForm = () => {
           />
         </FormGroup>
         <Button id="game-save-btn" color="success">
-          Save
+          SAVE
         </Button>
       </Form>
     </>

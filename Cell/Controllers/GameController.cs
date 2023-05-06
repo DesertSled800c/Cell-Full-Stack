@@ -1,6 +1,5 @@
 ﻿using Cell.Models;
 using Cell.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -18,7 +17,6 @@ namespace Cell.Controllers
             _userProfileRepository = userProfileRepository;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
@@ -26,7 +24,6 @@ namespace Cell.Controllers
             return Ok(_gameRepository.GetAll());
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetGameById(int id)
         {
@@ -38,16 +35,14 @@ namespace Cell.Controllers
             return Ok(game);
         }
 
-        [Authorize]
         [HttpGet("usergames")]
         public IActionResult GetUserGames()
         {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User user = GetCurrentUser();
 
-            return Ok(_gameRepository.GetByUserId(firebaseUserId));
+            return Ok(_gameRepository.GetByUserId(user.Id));
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Game(Game game)
         {
@@ -57,6 +52,25 @@ namespace Cell.Controllers
             _gameRepository.Add(game);
             return CreatedAtAction(
                 nameof(GetGameById), new { game.Id }, game);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Game game)
+        {
+            if (id != game.Id)
+            {
+                return BadRequest();
+            }
+
+            _gameRepository.Update(game);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _gameRepository.Delete(id);
+            return NoContent();
         }
 
         private User GetCurrentUser()

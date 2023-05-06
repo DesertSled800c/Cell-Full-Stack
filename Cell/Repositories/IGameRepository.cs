@@ -7,7 +7,9 @@ namespace Cell.Repositories
     {
         List<Game> GetAll();
         Game GetById(int id);
-        List<Game> GetByUserId(string firebaseId);
+        List<Game> GetByUserId(int id);
         void Add(Game game);
+        void Update(Game game);
+        public void Delete(int id);
     }
 }

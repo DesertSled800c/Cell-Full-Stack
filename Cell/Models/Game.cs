@@ -12,6 +12,5 @@ namespace Cell.Models
         public string Title { get; set; }
         [Required]
         public string Body { get; set; }
-        public User User { get; set; }
     }
 }

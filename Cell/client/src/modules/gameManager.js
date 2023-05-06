@@ -72,3 +72,16 @@ export const addGame = (game) => {
     });
   });
 };
+
+export const UpdateGame = (id, game) => {
+  return getToken().then((token) => {
+    return fetch(apiUrl + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(game),
+    });
+  });
+};

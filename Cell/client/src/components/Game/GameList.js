@@ -13,8 +13,8 @@ export default function GameList() {
     <>
       <h1 className="text-center">List of games!!!!!</h1>
       <section>
-        {games.map((g) => (
-          <Game key={g.id} game={g} />
+        {games.map((game) => (
+          <Game key={game.id} game={game} />
         ))}
       </section>
     </>

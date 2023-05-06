@@ -18,8 +18,7 @@ namespace Cell.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-               SELECT g.Id, g.UserId, g.Title, g.Body, u.FireBaseUserId, u.FullName FROM Game g
-                      JOIN [User] u ON g.UserId = u.Id";
+               SELECT g.Id, g.UserId, g.Title, g.Body FROM Game g ORDER BY g.Title ASC";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -31,13 +30,7 @@ namespace Cell.Repositories
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 UserId = DbUtils.GetInt(reader, "UserId"),
                                 Title = DbUtils.GetString(reader, "Title"),
-                                Body = DbUtils.GetString(reader, "Body"),
-                                User = new User()
-                                {
-                                    Id = DbUtils.GetInt(reader, "UserId"),
-                                    FirebaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
-                                    FullName = DbUtils.GetString(reader, "FullName")
-                                },
+                                Body = DbUtils.GetString(reader, "Body")
                             });
                         }
                         return games;
@@ -77,16 +70,16 @@ namespace Cell.Repositories
                 }
             }
         }
-        public List<Game> GetByUserId(string firebaseUserId)
+        public List<Game> GetByUserId(int UserId)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT g.Id, g.UserId, g.Title, g.Body, u.FireBaseUserId, u.FullName FROM Game g JOIN [User] u ON g.UserId = u.Id WHERE u.FireBaseUserId = @FirebaseUserId";
+                    cmd.CommandText = @"SELECT g.Id, g.UserId, g.Title, g.Body FROM Game g WHERE g.UserId = @Id ORDER BY g.Title ASC";
 
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@Id", UserId);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -99,13 +92,7 @@ namespace Cell.Repositories
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 UserId = DbUtils.GetInt(reader, "UserId"),
                                 Title = DbUtils.GetString(reader, "Title"),
-                                Body = DbUtils.GetString(reader, "Body"),
-                                User = new User()
-                                {
-                                    Id = DbUtils.GetInt(reader, "UserId"),
-                                    FirebaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
-                                    FullName = DbUtils.GetString(reader, "FullName")
-                                },
+                                Body = DbUtils.GetString(reader, "Body")
                             });
                         }
 
@@ -124,8 +111,7 @@ namespace Cell.Repositories
                 {
                     cmd.CommandText = @"
             
-            SELECT g.UserId g.Title, g.Body, u.FireBaseUserId, u.FullName, up.Email FROM Game g JOIN User u ON g.UserId = u.Id
-                WHERE g.Id = @Id";
+            SELECT g.UserId g.Title, g.Body FROM Game g WHERE g.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -139,18 +125,46 @@ namespace Cell.Repositories
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 UserId = DbUtils.GetInt(reader, "UserId"),
                                 Title = DbUtils.GetString(reader, "Title"),
-                                Body = DbUtils.GetString(reader, "Body"),
-                                User = new User()
-                                {
-                                    Id = DbUtils.GetInt(reader, "UserId"),
-                                    FirebaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
-                                    FullName = DbUtils.GetString(reader, "FullName"),
-                                    Email = DbUtils.GetString(reader, "Email"),
-                                },
+                                Body = DbUtils.GetString(reader, "Body")
                             };
                         }
                         return game;
                     }
+                }
+            }
+        }
+
+        public void Update(Game game)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Game SET Title = @title, Body = @body WHERE Id = @id";
+                    DbUtils.AddParameter(cmd, "@title", game.Title);
+                    DbUtils.AddParameter(cmd, "@body", game.Body);
+                    cmd.Parameters.AddWithValue("@id", game.Id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Game WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
