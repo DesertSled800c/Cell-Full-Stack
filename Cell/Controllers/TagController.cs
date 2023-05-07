@@ -42,21 +42,29 @@ namespace Cell.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("gameId{id}")]
         public IActionResult Get(int id)
         {
-            var tag = _tagRepository.GetTagByTagId(id);
-            if (tag == null)
+            var tags = _tagRepository.GetTagByGameId(id);
+            if (tags == null)
             {
                 return NotFound();
             }
-            return Ok(tag);
+            return Ok(tags);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _tagRepository.DeleteTag(id);
+            return NoContent();
+        }
+
+        [HttpPost("{tagId}/game/{gameId}")]
+        public IActionResult AddGameTag(int tagId, int gameId)
+        {
+            var gameTag = new GameTag { TagId = tagId, GameId = gameId };
+            _tagRepository.AddGameTag(gameTag);
             return NoContent();
         }
     }

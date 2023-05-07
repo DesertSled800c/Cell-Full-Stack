@@ -1,8 +1,8 @@
 import { getToken } from "./authManager";
 
-const apiUrl = "/api/game";
+const apiUrl = "/api/tag";
 
-export const getAllGames = () => {
+export const getAllTags = () => {
   return getToken().then((token) => {
     return fetch(apiUrl, {
       method: "GET",
@@ -13,15 +13,15 @@ export const getAllGames = () => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error("An unknown error occurred while trying to get games.");
+        throw new Error("An unknown error occurred while trying to get tags.");
       }
     });
   });
 };
 
-export const getGameById = (id) => {
+export const getTagsByGameId = (gameId) => {
   return getToken().then((token) => {
-    return fetch(`${apiUrl}/${id}`, {
+    return fetch(`${apiUrl}/gameId${gameId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,33 +31,14 @@ export const getGameById = (id) => {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to get a game by ID."
+          "An unknown error occurred while trying to get tags by game ID."
         );
       }
     });
   });
 };
 
-export const getUserGames = () => {
-  return getToken().then((token) => {
-    return fetch(`${apiUrl}/userGames`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((resp) => {
-      if (resp.ok) {
-        return resp.json();
-      } else {
-        throw new Error(
-          "An unknown error occurred while trying to get user games."
-        );
-      }
-    });
-  });
-};
-
-export const addGame = (game) => {
+export const addTag = (tag) => {
   return getToken().then((token) => {
     return fetch(apiUrl, {
       method: "POST",
@@ -65,43 +46,41 @@ export const addGame = (game) => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(game),
+      body: JSON.stringify(tag),
     }).then((resp) => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error(
-          "An unknown error occurred while trying to add a game."
-        );
+        throw new Error("An unknown error occurred while trying to add a tag.");
       }
     });
   });
 };
 
-export const updateGame = (game) => {
+export const updateTag = (tag) => {
   return getToken().then((token) => {
-    return fetch(`${apiUrl}/${game.id}`, {
+    return fetch(`${apiUrl}/${tag.id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(game),
+      body: JSON.stringify(tag),
     }).then((resp) => {
       if (resp.ok) {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to update a game."
+          "An unknown error occurred while trying to update a tag."
         );
       }
     });
   });
 };
 
-export const deleteGame = (id) => {
+export const deleteTag = (tagId) => {
   return getToken().then((token) => {
-    return fetch(`${apiUrl}/${id}`, {
+    return fetch(`${apiUrl}/${tagId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -109,7 +88,24 @@ export const deleteGame = (id) => {
     }).then((resp) => {
       if (!resp.ok) {
         throw new Error(
-          "An unknown error occurred while trying to delete a game."
+          "An unknown error occurred while trying to delete a tag."
+        );
+      }
+    });
+  });
+};
+
+export const addGameTag = (tagId, gameId) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/${tagId}/game/${gameId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (!resp.ok) {
+        throw new Error(
+          "An unknown error occurred while trying to add a game tag."
         );
       }
     });

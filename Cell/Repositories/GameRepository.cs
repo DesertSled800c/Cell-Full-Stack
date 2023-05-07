@@ -109,9 +109,7 @@ namespace Cell.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-            
-            SELECT g.UserId g.Title, g.Body FROM Game g WHERE g.Id = @Id";
+                    cmd.CommandText = @"SELECT g.Id, g.UserId, g.Title, g.Body FROM Game g WHERE g.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())

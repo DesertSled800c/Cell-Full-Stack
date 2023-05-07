@@ -56,7 +56,7 @@ namespace Cell.Repositories
                 }
             }
         }
-        public Tag GetTagByTagId(int id)
+        public List<Tag> GetTagByGameId(int id)
         {
             using (SqlConnection connection = Connection)
             {
@@ -64,14 +64,21 @@ namespace Cell.Repositories
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                        Select [Name]
-                        From Tag
-                        Where Id = @id";
+                    cmd.CommandText = @"SELECT t.Name FROM Tag t JOIN GameTag gt ON t.Id = gt.TagId WHERE gt.GameId = @id;";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
-                    return new Tag { Id = id, Name = (string)cmd.ExecuteScalar() };
+                    var reader = cmd.ExecuteReader();
+                    var tags = new List<Tag>();
+                    while (reader.Read())
+                    {
+                        tags.Add(new Tag()
+                        {
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        });
+                    }
+                    reader.Close();
+                    return tags;
                 }
             }
         }
@@ -105,6 +112,25 @@ namespace Cell.Repositories
 
                     cmd.Parameters.AddWithValue("@name", tag.Name);
                     cmd.Parameters.AddWithValue("@id", tag.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void AddGameTag(GameTag gameTag)
+        {
+            using (var connection = Connection)
+            {
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO GameTag (GameId, TagId)
+                        VALUES (@gameId, @tagId)";
+
+                    DbUtils.AddParameter(cmd, "@gameId", gameTag.GameId);
+                    DbUtils.AddParameter(cmd, "@tagId", gameTag.TagId);
+
                     cmd.ExecuteNonQuery();
                 }
             }

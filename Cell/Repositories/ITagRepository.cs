@@ -7,8 +7,9 @@ namespace Cell.Repositories
     {
         List<Tag> GetAllTags();
         void AddTag(Tag tag);
-        Tag GetTagByTagId(int id);
+        List<Tag> GetTagByGameId(int id);
         void DeleteTag(int id);
         void UpdateTag(Tag tag);
+        void AddGameTag(GameTag gameTag);
     }
 }

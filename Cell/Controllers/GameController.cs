@@ -35,7 +35,7 @@ namespace Cell.Controllers
             return Ok(game);
         }
 
-        [HttpGet("usergames")]
+        [HttpGet("userGames")]
         public IActionResult GetUserGames()
         {
             User user = GetCurrentUser();

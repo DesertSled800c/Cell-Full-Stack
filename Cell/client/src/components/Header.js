@@ -27,7 +27,7 @@ export default function Header({ isLoggedIn, userProfile }) {
             {isLoggedIn && (
               <>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/usergames">
+                  <NavLink tag={RRNavLink} to="/userGames">
                     My Games
                   </NavLink>
                 </NavItem>
