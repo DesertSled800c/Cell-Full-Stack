@@ -38,24 +38,6 @@ namespace Cell.Repositories
             }
         }
 
-        public void AddTag(Tag tag)
-        {
-            using (var conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        Insert Into Tag (Name)
-                        Output Inserted.Id
-                        Values (@name)";
-
-                    cmd.Parameters.AddWithValue("@name", tag.Name);
-
-                    tag.Id = (int)cmd.ExecuteScalar();
-                }
-            }
-        }
         public List<Tag> GetTagByGameId(int id)
         {
             using (SqlConnection connection = Connection)
@@ -90,7 +72,7 @@ namespace Cell.Repositories
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Tag WHERE Id = @id";
+                    cmd.CommandText = "DELETE FROM Tag WHERE Tag.Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -117,7 +99,7 @@ namespace Cell.Repositories
             }
         }
 
-        public void AddGameTag(GameTag gameTag)
+        public void AddGameTag(int gameId, int tagId)
         {
             using (var connection = Connection)
             {
@@ -125,13 +107,33 @@ namespace Cell.Repositories
                 using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO GameTag (GameId, TagId)
-                        VALUES (@gameId, @tagId)";
+                INSERT INTO GameTag (GameId, TagId)
+                VALUES (@gameId, @tagId)";
 
-                    DbUtils.AddParameter(cmd, "@gameId", gameTag.GameId);
-                    DbUtils.AddParameter(cmd, "@tagId", gameTag.TagId);
+                    DbUtils.AddParameter(cmd, "@gameId", gameId);
+                    DbUtils.AddParameter(cmd, "@tagId", tagId);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+        public void AddTag(Tag tag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        Insert Into Tag (Name)
+                        Output Inserted.Id
+                        Values (@name)";
+
+                    cmd.Parameters.AddWithValue("@name", tag.Name);
+
+                    tag.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }

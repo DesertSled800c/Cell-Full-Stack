@@ -1,48 +1,50 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { addGame } from "../../modules/gameManager";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
+export default function GameForm() {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-const GameForm = () => {
-  const [title, setTitle] = useState();
-  const [body, setBody] = useState();
-
-  const submitGame = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const game = {
-      title,
-      body
-    };
-
-    addGame(game)
+    const newGame = { title, body };
+    addGame(newGame).then(() => {
+      // Clear the form and update the list of games
+      setTitle("");
+      setBody("");
+      window.location.reload(); // Refresh the page to get the updated list of games
+    });
   };
 
   return (
-    <>
-      <h2>New Game</h2>
-      <Form onSubmit={submitGame}>
-        <FormGroup>
-          <Label htmlFor="title">Title</Label>
-          <Input
-            name="title"
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="body">Body</Label>
-          <Input
-            name="body"
-            type="textarea"
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </FormGroup>
-        <Button id="game-save-btn" color="success">
-          SAVE
-        </Button>
-      </Form>
-    </>
+    <Form onSubmit={handleSubmit}>
+      <h2>Add a new game:</h2>
+      <FormGroup>
+        <Label for="title">Title:</Label>
+        <Input
+          type="text"
+          name="title"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="body">Body:</Label>
+        <Input
+          type="textarea"
+          name="body"
+          id="body"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          required
+        />
+      </FormGroup>
+      <Button color="primary" type="submit">
+        Add Game
+      </Button>
+    </Form>
   );
-};
-
-export default GameForm;
+}
