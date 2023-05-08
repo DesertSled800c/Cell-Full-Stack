@@ -60,12 +60,11 @@ namespace Cell.Controllers
             return NoContent();
         }
 
-        [HttpPost("{tagId}/game/{gameId}")]
-        public IActionResult AddGameTag(int tagId, int gameId)
+        [HttpPost("game/{gameId}/tag/{tagId}")]
+        public IActionResult AddGameTag(int gameId, int tagId)
         {
-            var gameTag = new GameTag { TagId = tagId, GameId = gameId };
-            _tagRepository.AddGameTag(gameTag);
-            return NoContent();
+            _tagRepository.AddGameTag(gameId, tagId);
+            return Ok();
         }
     }
 }

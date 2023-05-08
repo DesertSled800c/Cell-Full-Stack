@@ -10,6 +10,6 @@ namespace Cell.Repositories
         List<Tag> GetTagByGameId(int id);
         void DeleteTag(int id);
         void UpdateTag(Tag tag);
-        void AddGameTag(GameTag gameTag);
+        public void AddGameTag(int gameId, int tagId);
     }
 }
