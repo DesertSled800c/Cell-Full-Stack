@@ -18,11 +18,12 @@ export default function GameForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2>Add a new game:</h2>
+    <Form className="input" onSubmit={handleSubmit}>
+      <h3>Add a new game:</h3>
       <FormGroup>
         <Label for="title">Title:</Label>
         <Input
+          className="my-input"
           type="text"
           name="title"
           id="title"
@@ -34,6 +35,7 @@ export default function GameForm() {
       <FormGroup>
         <Label for="body">Body:</Label>
         <Input
+          className="my-input"
           type="textarea"
           name="body"
           id="body"
@@ -42,7 +44,7 @@ export default function GameForm() {
           required
         />
       </FormGroup>
-      <Button color="primary" type="submit">
+      <Button className="my-button" color="primary" type="submit">
         Add Game
       </Button>
     </Form>

@@ -12,24 +12,24 @@ export default function GameList() {
 
   return (
     <>
-      <h1 className="text-center">List of my games!!!!!</h1>
+      <h1 className="text-center my-games-heading">List of my games!!!!!</h1>
       <section>
         {games.map((game) => (
           <Card
             key={game.id}
-            className="m-5 text-center"
+            className="game-card"
             style={{ borderRadius: "20px" }}
           >
-            <h3>Title: {game.title}</h3>
-            <h2>Body: {game.body}</h2>
+            <h2>Title: {game.title}</h2>
+            <h1>Body: {game.body}</h1>
             {game.tags && (
-              <h2>
+              <h4>
                 <ul>
                   {game.tags.map((tag) => (
                     <li key={tag.id}>{tag.name}</li>
                   ))}
                 </ul>
-              </h2>
+              </h4>
             )}
           </Card>
         ))}

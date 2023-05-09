@@ -8,12 +8,10 @@ import { Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import GameForm from "./GameForm";
 import { addGameTag, getAllTags } from "../../modules/tagManager";
 
-
 export default function UserGames() {
   const [games, setGames] = useState([]);
   const [editableGameId, setEditableGameId] = useState(null);
   const [tags, setTags] = useState([]);
-  
 
   useEffect(() => {
     getUserGames().then(setGames);
@@ -73,12 +71,12 @@ export default function UserGames() {
 
   return (
     <>
-      <h1 className="text-center">List of my games!!!!!</h1>
+      <h1 className="text-center my-games-heading">List of my games!!!!!</h1>
       <section>
         {games.map((game) => (
           <Card
             key={game.id}
-            className="m-5 text-center"
+            className="game-card"
             style={{ borderRadius: "20px" }}
           >
             {editableGameId === game.id ? (
@@ -91,7 +89,7 @@ export default function UserGames() {
                   handleEdit(game.id, newTitle, newBody);
                 }}
               >
-                <FormGroup>
+                <FormGroup className="input">
                   <Label for="title">Title:</Label>
                   <Input
                     type="text"
@@ -121,36 +119,39 @@ export default function UserGames() {
             ) : (
               // Render the game information if this is not the editable game
               <>
-                <h3>Title: {game.title}</h3>
-                <h2>Body: {game.body}</h2>
+                <h2>Title: {game.title}</h2>
+                <h1>Body: {game.body}</h1>
                 {game.tags && (
-                  <h2>
+                  <h4>
                     <ul>
                       {game.tags.map((tag) => (
                         <li key={tag.id}>{tag.name}</li>
                       ))}
                     </ul>
-                  </h2>
+                  </h4>
                 )}
                 <Button
                   color="primary"
-                  className="m-3"
+                  className="m-3 edit-game-button input"
                   onClick={() => setEditableGameId(game.id)}
                 >
                   Edit
                 </Button>
                 <Button
                   color="danger"
-                  className="m-3"
+                  className="m-3 delete-game-button input"
                   onClick={() => handleDelete(game.id)}
                 >
                   Delete
                 </Button>
               </>
             )}
-            <FormGroup>
-              <Label for="newTag">Add Tag:</Label>
+            <FormGroup className="input">
+              <Label for="newTag">
+                <h3>Add Tag:</h3>
+              </Label>
               <Input
+                className="input"
                 type="select"
                 name="newTag"
                 id="newTag"

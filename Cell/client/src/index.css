@@ -16,10 +16,44 @@ header {
   justify-content: space-between;
 }
 
-html {
-  background-color: rgb(22, 74, 94);
-}
-
 .switch {
   display: flex;
+}
+
+html {
+  background-color: rgb(221, 199, 152);
+}
+
+.input {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+}
+.game-card {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* CSS for Edit and Delete buttons */
+.edit-game-button,
+.delete-game-button {
+  border-radius: 10px;
+}
+
+/* CSS for Add Tag form */
+.add-tag-form {
+  margin-top: 20px;
+}
+
+/* CSS for My Games heading */
+.my-games-heading {
+  margin-top: 50px;
+}
+
+.add-tag-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
