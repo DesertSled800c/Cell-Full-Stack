@@ -124,7 +124,7 @@ export const addGameTag = (gameId, tagId) => {
       },
     }).then((resp) => {
       if (resp.ok) {
-        return resp.json();
+        return resp;
       } else {
         throw new Error(
           "An unknown error occurred while trying to add a game tag."
