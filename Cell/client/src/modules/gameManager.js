@@ -89,7 +89,7 @@ export const updateGame = (game) => {
       body: JSON.stringify(game),
     }).then((resp) => {
       if (resp.ok) {
-        return resp.json();
+        return resp;
       } else {
         throw new Error(
           "An unknown error occurred while trying to update a game."

@@ -8,10 +8,12 @@ import { Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import GameForm from "./GameForm";
 import { addGameTag, getAllTags } from "../../modules/tagManager";
 
+
 export default function UserGames() {
   const [games, setGames] = useState([]);
   const [editableGameId, setEditableGameId] = useState(null);
   const [tags, setTags] = useState([]);
+  
 
   useEffect(() => {
     getUserGames().then(setGames);
@@ -59,15 +61,15 @@ export default function UserGames() {
   };
 
   const handleAddTag = (gameId, tagId) => {
-  addGameTag(gameId, tagId)
-    .then(() => {
-      // Refresh the game list to show the updated tags
-      getUserGames().then(setGames);
-    })
-    .catch((error) => {
-      console.error("Error adding tag to game", error);
-    });
-};
+    addGameTag(gameId, tagId)
+      .then(() => {
+        // Refresh the game list to show the updated tags
+        getUserGames().then(setGames);
+      })
+      .catch((error) => {
+        console.error("Error adding tag to game", error);
+      });
+  };
 
   return (
     <>
