@@ -1,40 +1,379 @@
-.App {
-  text-align: center;
-  background-color: rgb(221, 199, 152);
+/* Define colors */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #e6c718;
+  --light-bg-color: #2d2d2d;
+  --dark-text-color: #a9a4a4;
+  --light-text-color: #fffefc;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Set default font family and size */
+body {
+  font-family: "OCR A Std", monospace;
+  font-size: 16px;
+  background-color: var(--light-bg-color);
+  color: var(--dark-text-color);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Style links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+a:hover {
+  text-decoration: underline;
+}
+
+/* Add padding and a border to images */
+img {
+  padding: 0.5rem;
+  border: 1px solid var(--dark-text-color);
+  border-radius: 0.4rem;
+  max-width: 100%;
+}
+
+/* Set default button styles */
+button {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #dd55b4;
+  color: black;
+}
+
+button.secondary {
+  background-color: var(--secondary-color);
+}
+
+button.secondary:hover {
+  background-color: #d4af37;
+}
+
+/* Set default input styles */
+input,
+select,
+textarea {
+  border-radius: 0.4rem;
+  border: 1px solid var(--dark-text-color);
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--light-text-color);
+  color: rgb(0, 0, 0);
+  margin-bottom: 1rem;
+}
+
+textarea {
+  height: 10rem;
+  color: rgb(0, 0, 0);
+}
+
+/* Set default form styles */
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--light-text-color);
+}
+
+/* Set default error message styles */
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Improve readability */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--light-text-color);
+}
+
+p {
+  line-height: 1.5;
+}
+
+/* Add dark background to code blocks */
+pre {
+  background-color: var(--dark-text-color);
+  color: var(--light-text-color);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Add border and padding to table cells */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+th,
+td {
+  border: 1px solid var(--dark-text-color);
+  padding: 0.5rem;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+}
+
+/* Add margin between list items */
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Set default styles for buttons and form elements in modals */
+.modal button,
+.modal input,
+.modal select,
+.modal textarea {
+  background-color: var(--light-text-color);
+  color: var(--dark-text-color);
+}
+
+.modal button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+}
+
+.modal label {
+  color: var(--dark-text-color);
+}
+
+/* Set default styles for 3js elements */
+canvas {
+  display: block;
+  margin: 1rem auto;
+}
+
+.stats-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
   color: white;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.App-link {
-  color: #61dafb;
+.gui-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  color: white;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 0.4rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.gui-panel h3 {
+  margin-top: 0;
 }
 
+.gui-panel input {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.gui-panel button {
+  margin-top: 1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.gui-panel button:hover {
+  background-color: #0055a2;
+}
+
+.gui-panel label {
+  margin-bottom: 0.5rem;
+}
+
+.gui-panel hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.my-games-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.game-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.game-card-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-card {
+  background-color: var(--light-bg-color);
+  color: var(--light-text-color);
+  border-radius: 0.4rem;
+  padding: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 2%;
+  width: 100%;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.game-body {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tag {
+  background-color: rgb(248, 200, 10);
+  color:rgb(0, 0, 0);
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  margin: 0.5rem;
+  font-size: 1em;
+}
+
+.edit-button {
+  margin-top: 1rem;
+  margin: 1%;
+}
+
+.delete-button {
+  margin-top: 1rem;
+}
+
+.game-form {
+  background-color: var(--light-bg-color);
+  color: var(--light-text-color);
+  border-radius: 0.4rem;
+  padding: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 2%;
+  width: 96%;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-heading {
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.save-button {
+  background-color: var(--primary-color);
+  margin-right: 1rem;
+}
+
+/* Set the font size and font family for the NavbarBrand */
+
+/* Change the color and font size of the links */
+.Navbar a,
+.Navbar a:visited {
+  color: rgb(203, 91, 91);
+  font-size: 1rem;
+}
+
+/* Add some space between the links */
+.Navbar a+a {
+  margin-left: 1rem;
+}
+
+/* Change the background color and font size of the Welcome message */
+.Navbar .NavItem:last-child {
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  color: red;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  color: var(--light-text-color);
+  color: #dd55b4;
+}
+
+.nav-link {
+  font-size: 1.3rem;
+  color: rgb(203, 91, 91);
+}
+
+.navbar-nav {
+    color: rgb(203, 91, 91);
+}

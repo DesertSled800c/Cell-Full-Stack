@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getAllGames } from "../../modules/gameManager";
-import { Card } from "reactstrap";
-
 
 export default function GameList() {
   const [games, setGames] = useState([]);
@@ -12,26 +10,24 @@ export default function GameList() {
 
   return (
     <>
-      <h1 className="text-center my-games-heading">List of my games!!!!!</h1>
-      <section>
+      <h1 className="text-center my-games-heading">All Games</h1>
+      <section className="game-section">
         {games.map((game) => (
-          <Card
-            key={game.id}
-            className="game-card"
-            style={{ borderRadius: "20px" }}
-          >
-            <h2>Title: {game.title}</h2>
-            <h1>Body: {game.body}</h1>
+          <div key={game.id} className="game-card">
+            <h2 className="game-title">Title: {game.title}</h2>
+            <p className="game-body">Body: {game.body}</p>
             {game.tags && (
-              <h4>
-                <ul>
+              <div className="tag-list">
+                <ul className="tag-list-ul">
                   {game.tags.map((tag) => (
-                    <li key={tag.id}>{tag.name}</li>
+                    <li key={tag.id} className="tag">
+                      {tag.name}
+                    </li>
                   ))}
                 </ul>
-              </h4>
+              </div>
             )}
-          </Card>
+          </div>
         ))}
       </section>
     </>

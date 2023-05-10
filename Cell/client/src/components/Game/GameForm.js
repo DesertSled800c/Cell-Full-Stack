@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { addGame } from "../../modules/gameManager";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+
 
 export default function GameForm() {
   const [title, setTitle] = useState("");
@@ -18,11 +18,13 @@ export default function GameForm() {
   };
 
   return (
-    <Form className="input" onSubmit={handleSubmit}>
-      <h3>Add a new game:</h3>
-      <FormGroup>
-        <Label for="title">Title:</Label>
-        <Input
+    <form className="game-form" onSubmit={handleSubmit}>
+      <h3 className="form-heading">Add a new game:</h3>
+      <div className="form-input">
+        <label htmlFor="title" className="form-label">
+          Title:
+        </label>
+        <input
           className="my-input"
           type="text"
           name="title"
@@ -31,22 +33,23 @@ export default function GameForm() {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-      </FormGroup>
-      <FormGroup>
-        <Label for="body">Body:</Label>
-        <Input
+      </div>
+      <div className="form-input">
+        <label htmlFor="body" className="form-label">
+          Body:
+        </label>
+        <textarea
           className="my-input"
-          type="textarea"
           name="body"
           id="body"
           value={body}
           onChange={(e) => setBody(e.target.value)}
           required
         />
-      </FormGroup>
-      <Button className="my-button" color="primary" type="submit">
+      </div>
+      <button className="add-button" type="submit">
         Add Game
-      </Button>
-    </Form>
+      </button>
+    </form>
   );
 }
