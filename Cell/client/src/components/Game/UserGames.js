@@ -4,9 +4,9 @@ import {
   deleteGame,
   updateGame,
 } from "../../modules/gameManager";
-import { Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import GameForm from "./GameForm";
 import { addGameTag, getAllTags } from "../../modules/tagManager";
+
 
 export default function UserGames() {
   const [games, setGames] = useState([]);
@@ -71,108 +71,106 @@ export default function UserGames() {
 
   return (
     <>
-      <h1 className="text-center my-games-heading">List of my games!!!!!</h1>
-      <section>
+      <h1 className="text-center my-games-heading">My Games</h1>
+      <section className="game-section">
         {games.map((game) => (
-          <Card
-            key={game.id}
-            className="game-card"
-            style={{ borderRadius: "20px" }}
-          >
-            {editableGameId === game.id ? (
-              // Render the edit form if this is the editable game
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const newTitle = e.target.title.value;
-                  const newBody = e.target.body.value;
-                  handleEdit(game.id, newTitle, newBody);
-                }}
-              >
-                <FormGroup className="input">
-                  <Label for="title">Title:</Label>
-                  <Input
-                    type="text"
-                    name="title"
-                    id="title"
-                    defaultValue={game.title}
-                    required
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="body">Body:</Label>
-                  <Input
-                    type="textarea"
-                    name="body"
-                    id="body"
-                    defaultValue={game.body}
-                    required
-                  />
-                </FormGroup>
-                <Button color="success" type="submit">
-                  Save
-                </Button>
-                <Button color="secondary" onClick={handleCancelEdit}>
-                  Cancel
-                </Button>
-              </Form>
-            ) : (
-              // Render the game information if this is not the editable game
-              <>
-                <h2>Title: {game.title}</h2>
-                <h1>Body: {game.body}</h1>
-                {game.tags && (
-                  <h4>
-                    <ul>
-                      {game.tags.map((tag) => (
-                        <li key={tag.id}>{tag.name}</li>
-                      ))}
-                    </ul>
-                  </h4>
-                )}
-                <Button
-                  color="primary"
-                  className="m-3 edit-game-button input"
-                  onClick={() => setEditableGameId(game.id)}
+          <div key={game.id} className="game-card">
+            <div>
+              {editableGameId === game.id ? (
+                // Render the edit form if this is the editable game
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const newTitle = e.target.title.value;
+                    const newBody = e.target.body.value;
+                    handleEdit(game.id, newTitle, newBody);
+                  }}
                 >
-                  Edit
-                </Button>
-                <Button
-                  color="danger"
-                  className="m-3 delete-game-button input"
-                  onClick={() => handleDelete(game.id)}
+                  <div className="input">
+                    <label htmlFor="title">Title:</label>
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      defaultValue={game.title}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="body">Body:</label>
+                    <textarea
+                      name="body"
+                      id="body"
+                      defaultValue={game.body}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="save-button">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="cancel-button"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              ) : (
+                // Render the game information if this is not the editable game
+                <>
+                  <h2 className="game-title">{game.title}</h2>
+                  <p className="game-body">{game.body}</p>
+                  <button
+                    type="button"
+                    className="edit-button"
+                    onClick={() => setEditableGameId(game.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => handleDelete(game.id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            </div>
+            <div className="tag-dropdown-container">
+              {tags && (
+                <select
+                  className="tag-dropdown"
+                  defaultValue=""
+                  onChange={(e) => handleAddTag(game.id, e.target.value)}
                 >
-                  Delete
-                </Button>
-              </>
-            )}
-            <FormGroup className="input">
-              <Label for="newTag">
-                <h3>Add Tag:</h3>
-              </Label>
-              <Input
-                className="input"
-                type="select"
-                name="newTag"
-                id="newTag"
-                value=""
-                onChange={(e) => {
-                  const tagId = e.target.value;
-                  handleAddTag(game.id, parseInt(tagId)); // pass in tagId as an integer
-                }}
-              >
-                <option value="">Select a tag</option>
-                {tags.map((tag) => (
-                  <option key={tag.id} value={tag.id}>
-                    {tag.name}
+                  <option value="" disabled>
+                    Add Tag
                   </option>
-                ))}
-              </Input>
-            </FormGroup>
-          </Card>
+                  {tags.map((tag) => (
+                    <option key={tag.id} value={tag.id}>
+                      {tag.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+            {game.tags && (
+              <div className="tag-list">
+                <ul className="tag-list-ul">
+                  {game.tags.map((tag) => (
+                    <li key={tag.id} className="tag">
+                      {tag.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         ))}
       </section>
-      <GameForm refreshGames={() => getUserGames().then(setGames)} />
+      <GameForm />
     </>
   );
 }

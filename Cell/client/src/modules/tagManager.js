@@ -76,44 +76,6 @@ export const deleteTag = (tagId) => {
   });
 };
 
-// export const addTag = (tag) => {
-//   return getToken().then((token) => {
-//     return fetch(apiUrl, {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(tag),
-//     }).then((resp) => {
-//       if (resp.ok) {
-//         return resp.json();
-//       } else {
-//         throw new Error("An unknown error occurred while trying to add a tag.");
-//       }
-//     });
-//   });
-// };
-
-// export const addGameTag = (tagId, gameId) => {
-//   return getToken().then((token) => {
-//     return fetch(`${apiUrl}/${tagId}/game/${gameId}`, {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }).then((resp) => {
-//       if (!resp.ok) {
-//         throw new Error(
-//           "An unknown error occurred while trying to add a game tag."
-//         );
-//       }
-//     });
-//   });
-// };
-
-
-
 export const addGameTag = (gameId, tagId) => {
   return getToken().then((token) => {
     return fetch(`${apiUrl}/game/${gameId}/tag/${tagId}`, {

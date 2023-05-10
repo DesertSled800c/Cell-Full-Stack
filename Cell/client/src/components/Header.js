@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import { NavLink as RRNavLink } from "react-router-dom";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import { NavLink } from "react-router-dom";
 import { logout } from "../modules/authManager";
 
 export default function Header({ isLoggedIn, userProfile }) {
@@ -17,62 +8,95 @@ export default function Header({ isLoggedIn, userProfile }) {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md">
-        <NavbarBrand tag={RRNavLink} to="/">
-          CELL
-        </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            {isLoggedIn && (
-              <>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/userGames">
-                    My Games
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <a
-                    aria-current="page"
-                    className="nav-link"
-                    style={{ cursor: "pointer" }}
-                    onClick={logout}
-                  >
-                    Logout
-                  </a>
-                </NavItem>
-              </>
-            )}
-            {!isLoggedIn && (
-              <>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/login">
-                    Login
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/register">
-                    Register
-                  </NavLink>
-                </NavItem>
-              </>
-            )}
-          </Nav>
-          <Nav navbar>
-            <NavItem>
-              <a
-                aria-current="page"
-                className="nav-link"
-                href="https://www.youtube.com/watch?v=Kk2MH9O4pXY"
-                target="_new"
-              >
-                About
-              </a>
-            </NavItem>
-            {userProfile && <NavItem>Welcome, {userProfile.fullName}!</NavItem>}
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <nav className="navbar navbar-dark bg-dark navbar-expand-md">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="/">
+            CELL
+          </a>
+          <button className="navbar-toggler" type="button" onClick={toggle}>
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
+            <ul className="navbar-nav me-auto mb-2 mb-md-0">
+              {isLoggedIn && (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      exact
+                      to="/userGames"
+                    >
+                      My Games
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="https://www.youtube.com/watch?v=Kk2MH9O4pXY"
+                      target="_new"
+                    >
+                      About
+                    </a>
+                  </li>
+                </>
+              )}
+              {!isLoggedIn && (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      exact
+                      to="/login"
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      exact
+                      to="/register"
+                    >
+                      Register
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="https://www.youtube.com/watch?v=Kk2MH9O4pXY"
+                      target="_new"
+                    >
+                      About
+                    </a>
+                  </li>
+                </>
+              )}
+            </ul>
+            <ul className="navbar-nav">
+              {userProfile && (
+                <>
+                  <li className="nav-item">
+                    <span className="nav-link">
+                      Welcome, {userProfile.fullName}!
+                    </span>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      style={{ cursor: "pointer" }}
+                      onClick={logout}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        </div>
+      </nav>
     </div>
   );
 }
