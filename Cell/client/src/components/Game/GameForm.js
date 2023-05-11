@@ -13,8 +13,6 @@ export default function GameForm() {
     submitButton.disabled = true;
 
     if (initialConfig === "") {
-      // Show an error message to the user and prevent the form from submitting
-      alert("Initial configuration cannot be empty");
       setShowInitialConfigError(true);
       setInitialConfig("");
       submitButton.disabled = false;
@@ -55,7 +53,7 @@ export default function GameForm() {
       <GameOLife setInitialConfig={setInitialConfigFromChild} />
       <div className="initial-config-error">
         {showInitialConfigError && (
-          <p>Please set an initial configuration before submitting the form.</p>
+          <p>Please set an initial configuration before Add Game.</p>
         )}
       </div>
       <button

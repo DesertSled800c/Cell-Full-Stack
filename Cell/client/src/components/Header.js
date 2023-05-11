@@ -21,21 +21,14 @@ export default function Header({ isLoggedIn, userProfile }) {
               {isLoggedIn && (
                 <>
                   <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="/userGames"
-                    >
+                    <NavLink className="nav-link" to="/userGames">
                       My Games
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      href="https://www.youtube.com/watch?v=Kk2MH9O4pXY"
-                      target="_new"
-                    >
+                    <NavLink className="nav-link" to="/about">
                       About
-                    </a>
+                    </NavLink>
                   </li>
                 </>
               )}
@@ -60,13 +53,9 @@ export default function Header({ isLoggedIn, userProfile }) {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      href="https://www.youtube.com/watch?v=Kk2MH9O4pXY"
-                      target="_new"
-                    >
+                    <NavLink className="nav-link" to="/about">
                       About
-                    </a>
+                    </NavLink>
                   </li>
                 </>
               )}

@@ -236,7 +236,7 @@ const GameOfLife = ({ setInitialConfig }) => {
       <div className="game-info">
         <p>Generation: {generation}</p>
       </div>
-      <label htmlFor="initialConfig">Initial Configuration:</label>
+      <label htmlFor="initialConfig">Initial Configuration Preview:</label>
       <input
         className="initial-config-input"
         type="text"

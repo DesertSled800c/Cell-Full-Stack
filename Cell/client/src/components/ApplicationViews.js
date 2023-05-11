@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import GameList from "./Game/GameList";
 import UserGames from "./Game/UserGames";
+import { About } from "./About";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -17,6 +18,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           path="userGames"
           element={isLoggedIn ? <UserGames /> : <Navigate to="/login" />}
         />
+        <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="*" element={<p>Whoops, nothing here...</p>} />
