@@ -16,6 +16,13 @@ const GameOfLife = ({ setInitialConfig }) => {
   const [intervalId, setIntervalId] = useState(null);
   const [speed, setSpeed] = useState(5);
 
+  const handleSetInitialConfig = () => {
+    const binaryString = board
+      .flat()
+      .map((cell) => (cell ? "1" : "0"))
+      .join("");
+    setInitialConfig(binaryString);
+  };
   const runningRef = useRef(running);
   runningRef.current = running;
 
@@ -37,8 +44,6 @@ const GameOfLife = ({ setInitialConfig }) => {
 
   const handleStart = () => {
     setRunning(true);
-    const id = setInterval(runSimulation, 1000 / speed);
-    setIntervalId(id);
   };
 
   const handleStop = () => {
@@ -47,29 +52,31 @@ const GameOfLife = ({ setInitialConfig }) => {
     setIntervalId(null);
   };
 
+  const handleSingleStep = () => {
+    if (!runningRef.current) {
+      const newBoard = computeNextBoard(board);
+      setBoard(newBoard);
+      setGeneration(generationRef.current + 1);
+    }
+  };
+
   const handleRandom = () => {
-    const newBoard = board.map((row) => row.map(() => Math.random() < 0.5));
+    const newBoard = Array.from({ length: HEIGHT }, () =>
+      Array.from({ length: WIDTH }, () => Math.random() > 0.7)
+    );
     setBoard(newBoard);
-    setRandomConfig(true);
+    setGeneration(0);
   };
 
   const handleClear = () => {
-    const newBoard = board.map((row) => row.map(() => false));
+    const newBoard = Array.from({ length: HEIGHT }, () =>
+      Array.from({ length: WIDTH }, () => false)
+    );
     setBoard(newBoard);
     setGeneration(0);
-    setRandomConfig(false);
-  };
-
-  const handleSetInitialConfig = () => {
-    const binaryString = board
-      .flat()
-      .map((cell) => (cell ? "1" : "0"))
-      .join("");
-    setInitialConfig(binaryString);
-  };
-
-  const handleResetGeneration = () => {
-    setGeneration(0);
+    setRunning(false);
+    clearInterval(intervalId);
+    setIntervalId(null);
   };
 
   const handleSpeedChange = (event) => {
@@ -81,127 +88,175 @@ const GameOfLife = ({ setInitialConfig }) => {
     }
   };
 
-  const runSimulation = () => {
-    if (!runningRef.current) {
-      return;
-    }
-
-    setBoard((board) => {
-      const newBoard = board.map((row, y) =>
-        row.map((cell, x) => {
-          const neighbors = [
-            [y - 1, x - 1],
-            [y - 1, x],
-            [y - 1, x + 1],
-            [y, x - 1],
-            [y, x + 1],
-            [y + 1, x - 1],
-            [y + 1, x],
-            [y + 1, x + 1],
-          ]
-            .filter(([y, x]) => y >= 0 && y < HEIGHT && x >= 0 && x < WIDTH)
-            .map(([y, x]) => board[y][x]);
-
-          const aliveNeighbors = neighbors.filter((cell) => cell).length;
-          if (cell && (aliveNeighbors === 2 || aliveNeighbors === 3)) {
-            return true;
-          } else if (!cell && aliveNeighbors === 3) {
-            return true;
-          } else {
-            return false;
-          }
-        })
-      );
-      return newBoard;
-    });
-
-    setGeneration((generation) => generation + 1);
+  const handleRandomConfigChange = () => {
+    const newBoard = board.map((row) => row.map(() => Math.random() < 0.5));
+    setBoard(newBoard);
+    setRandomConfig(true);
   };
 
   useEffect(() => {
     if (randomConfig) {
+      handleRandom();
+    }
+  }, [randomConfig]);
+
+  useEffect(() => {
+    if (!running) {
       return;
     }
 
-    handleRandom();
-  }, []);
+    const id = setInterval(() => {
+      const newBoard = computeNextBoard(board);
+      setBoard(newBoard);
+      setGeneration(generationRef.current + 1);
+    }, 1000 / speed);
+
+    setIntervalId(id);
+
+    return () => clearInterval(id);
+  }, [board, running, speed]);
+
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (running) {
-      clearInterval(intervalId);
-      const id = setInterval(runSimulation, 1000 / speed);
-      setIntervalId(id);
-    }
-  }, [speed]);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
 
- return (
-   <div>
-     <div className="controls">
-       <div>Generation: {generationRef.current}</div>
-       <button className="start-btn" onClick={handleStart}>
-         Start
-       </button>
-       <button className="stop-btn" onClick={handleStop}>
-         Stop
-       </button>
-       <button className="random-btn" onClick={handleRandom}>
-         Random
-       </button>
-       <button className="clear-btn" onClick={handleClear}>
-         Clear
-       </button>
-       <button className="reset-gen-btn" onClick={handleResetGeneration}>
-         Reset Generation
-       </button>
-       <label htmlFor="speed">Speed:</label>
-       <input
-         className="speed-input"
-         type="range"
-         name="speed"
-         id="speed"
-         min="1"
-         max="10"
-         value={speed}
-         onChange={handleSpeedChange}
-       />
-       <label htmlFor="initialConfig">Initial Configuration:</label>
-       <input
-         className="initial-config-input"
-         type="text"
-         name="initialConfig"
-         id="initialConfig"
-         value={board
-           .flat()
-           .map((cell) => (cell ? "1" : "0"))
-           .join("")}
-         readOnly
-       />
-       <button
-         className="set-config-btn"
-         type="button"
-         onClick={handleSetInitialConfig}
-       >
-         Set Initial Config
-       </button>
-     </div>
-     <div className="board-container" onClick={handleBoardClick}>
-       {board.map((row, y) =>
-         row.map((cell, x) => (
-           <div
-             key={`${y},${x}`}
-             className={`cell ${cell ? "alive" : ""}`}
-             style={{
-               gridColumn: x + 1,
-               gridRow: y + 1,
-               width: CELL_SIZE - 2,
-               height: CELL_SIZE - 2,
-             }}
-           />
-         ))
-       )}
-     </div>
-   </div>
- );
+    const renderBoard = () => {
+      ctx.clearRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
+
+      ctx.fillStyle = "#008080";
+      ctx.fillRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
+
+      ctx.fillStyle = "#FA8072";
+      board.forEach((row, y) =>
+        row.forEach((alive, x) => {
+          if (alive) {
+            ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          }
+        })
+      );
+
+      ctx.strokeStyle = "#FA8072";
+      for (let x = 0; x <= WIDTH * CELL_SIZE; x += CELL_SIZE) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, HEIGHT * CELL_SIZE);
+        ctx.stroke();
+      }
+
+      for (let y = 0; y <= HEIGHT * CELL_SIZE; y += CELL_SIZE) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(WIDTH * CELL_SIZE, y);
+        ctx.stroke();
+      }
+    };
+    renderBoard();
+  }, [board]);
+
+  const computeNextBoard = (board) => {
+    const newBoard = Array.from({ length: HEIGHT }, () =>
+      Array.from({ length: WIDTH }, () => false)
+    );
+
+    for (let y = 0; y < HEIGHT; y++) {
+      for (let x = 0; x < WIDTH; x++) {
+        const neighbors = getNeighbors(board, x, y);
+        const aliveNeighbors = neighbors.filter((n) => n).length;
+
+        if (board[y][x] && aliveNeighbors >= 2 && aliveNeighbors <= 3) {
+          newBoard[y][x] = true;
+        } else if (!board[y][x] && aliveNeighbors === 3) {
+          newBoard[y][x] = true;
+        }
+      }
+    }
+
+    return newBoard;
+  };
+
+  const getNeighbors = (board, x, y) => {
+    const neighbors = [];
+
+    for (let yOffset = -1; yOffset <= 1; yOffset++) {
+      for (let xOffset = -1; xOffset <= 1; xOffset++) {
+        if (yOffset === 0 && xOffset === 0) {
+          continue;
+        }
+
+        const neighborX = x + xOffset;
+        const neighborY = y + yOffset;
+
+        if (
+          neighborX >= 0 &&
+          neighborY >= 0 &&
+          neighborX < WIDTH &&
+          neighborY < HEIGHT
+        ) {
+          neighbors.push(board[neighborY][neighborX]);
+        }
+      }
+    }
+
+    return neighbors;
+  };
+
+  return (
+    <div className="game-container">
+      <div className="game-header">
+        <div className="controls">
+          <button onClick={handleStart}>Start</button>
+          <button onClick={handleStop}>Stop</button>
+          <button onClick={handleClear}>Clear</button>
+          <button className="random-btn" onClick={handleRandomConfigChange}>
+            Random
+          </button>
+          <button onClick={handleSingleStep}>Step</button>
+          <label htmlFor="speed">Speed:</label>
+          <input
+            className="speed-input"
+            type="range"
+            name="speed"
+            id="speed"
+            min="1"
+            max="10"
+            value={speed}
+            onChange={handleSpeedChange}
+          />
+        </div>
+      </div>
+      <canvas
+        className="game-board"
+        ref={canvasRef}
+        width={CELL_SIZE * WIDTH}
+        height={CELL_SIZE * HEIGHT}
+        onClick={handleBoardClick}
+      />
+      <div className="game-info">
+        <p>Generation: {generation}</p>
+      </div>
+      <label htmlFor="initialConfig">Initial Configuration:</label>
+      <input
+        className="initial-config-input"
+        type="text"
+        name="initialConfig"
+        id="initialConfig"
+        value={board
+          .flat()
+          .map((cell) => (cell ? "1" : "0"))
+          .join("")}
+        readOnly
+      />
+      <button
+        className="set-config-btn"
+        type="button"
+        onClick={handleSetInitialConfig}
+      >
+        Set Initial Config
+      </button>
+    </div>
+  );
 };
 
 export default GameOfLife;

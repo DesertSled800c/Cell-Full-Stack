@@ -25,13 +25,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Add padding and a border to images */
-img {
-  padding: 0.5rem;
-  border: 1px solid var(--dark-text-color);
-  border-radius: 0.4rem;
-  max-width: 100%;
-}
 
 /* Set default button styles */
 button {
@@ -266,15 +259,6 @@ canvas {
   width: 100%;
 }
 
-.game-title {
-  font-size: 1.5rem;
-  margin-top: 0;
-}
-
-.game-body {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
 
 .tag-list {
   display: flex;
@@ -299,20 +283,6 @@ canvas {
 
 .delete-button {
   margin-top: 1rem;
-}
-
-.game-form {
-  background-color: var(--light-bg-color);
-  color: var(--light-text-color);
-  border-radius: 0.4rem;
-  padding: 2rem;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin: 2%;
-  width: 96%;
 }
 
 .input {
@@ -375,45 +345,12 @@ label {
 }
 
 .navbar-nav {
-    color: rgb(203, 91, 91);
+  color: rgb(203, 91, 91);
 }
 
 /* Game board */
-.board {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
-  grid-gap: 1px;
-  background-color: #333;
-}
-/* Game board */
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
-  grid-gap: 1px;
-  background-color: #333;
-}
 
-/* Cell styles */
-.game-cell {
-  background-color: #fff;
-  width: 10px;
-  height: 10px;
-}
 
-.game-cell.alive {
-  background-color: #000;
-}
-
-/* Cell styles */
-.cell {
-  background-color: #fff;
-}
-
-.cell.alive {
-  background-color: #000;
-}
 
 /* Game controls */
 .title {
@@ -435,29 +372,6 @@ label {
   margin-right: 0.5rem;
 }
 
-/* Speed select */
-.speed-label {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.speed-select {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-.fast {
-  color: green;
-}
-
-.medium {
-  color: orange;
-}
-
-.slow {
-  color: red;
-}
 
 /* Random control input */
 .random-label {
@@ -471,18 +385,6 @@ label {
   margin-bottom: 2rem;
 }
 
-/* Side length input */
-.side-label {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.side-input {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
 .controls {
   display: flex;
   justify-content: center;
@@ -491,21 +393,131 @@ label {
   margin-bottom: 1rem;
 }
 
-
-.cell {
-  background-color: rgb(191, 45, 45);
+.controls {
+  display: flex;
 }
 
-.cell.alive {
-  background-color: rgb(255, 182, 12);
+.random-btn {
+  margin-left: 10px;
 }
 
-.board-container {
+.speed-input {
+  margin-left: 10px;
+  width: 100px;
+}
+
+.initial-config-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 5px;
+}
+
+.set-config-btn {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game-board {
+  border: 1px solid #bbbbbb;
+  background-color: #ffffff;
+}
+
+.game-board::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.game-board canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  float: left;
+  width: calc(100% / 50);
+  height: calc(100% / 50);
+  border-right: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.game-board canvas::before {
+  content: "";
+  display: block;
+  padding-bottom: calc(100% / 50);
+}
+
+.game-board canvas::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.game-board canvas:last-child {
+  border-right: none;
+}
+
+.game-board canvas:nth-child(50n) {
+  border-bottom: none;
+}
+
+.game-body {
+  display: flex;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.game-info {
+  margin-top: 10px;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.game-form {
+  background-color: var(--light-bg-color);
+  color: var(--light-text-color);
+  border-radius: 0.4rem;
+  padding: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 2%;
+  width: 96%;
+}
+
+.board {
   display: grid;
-  grid-template-columns: repeat(50, 1fr);
-  grid-template-rows: repeat(50, 1fr);
-  border: 1px solid black;
-  width: 500px;
-  height: 500px;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+  grid-gap: 1px;
+  background-color: #333;
 }
 
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.canvas {
+  --board-background: #e33d3d;
+  --cell-color: #FFFFFF;
+  --grid-color: #bbbbbb;
+}
