@@ -23,7 +23,6 @@ export default function Header({ isLoggedIn, userProfile }) {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      exact
                       to="/userGames"
                     >
                       My Games
@@ -46,7 +45,6 @@ export default function Header({ isLoggedIn, userProfile }) {
                     <NavLink
                       className="nav-link"
                       activeClassName="active"
-                      exact
                       to="/login"
                     >
                       Login
@@ -56,7 +54,6 @@ export default function Header({ isLoggedIn, userProfile }) {
                     <NavLink
                       className="nav-link"
                       activeClassName="active"
-                      exact
                       to="/register"
                     >
                       Register

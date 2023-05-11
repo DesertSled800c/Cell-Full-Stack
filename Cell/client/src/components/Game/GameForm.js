@@ -1,21 +1,39 @@
 import React, { useState } from "react";
 import { addGame } from "../../modules/gameManager";
-
+import GameOLife from "./GameOLife";
 
 export default function GameForm() {
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [initialConfig, setInitialConfig] = useState("");
+  const [showInitialConfigError, setShowInitialConfigError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newGame = { title, body };
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
+    if (initialConfig === "") {
+      // Show an error message to the user and prevent the form from submitting
+      alert("Initial configuration cannot be empty");
+      setShowInitialConfigError(true);
+      setInitialConfig("");
+      submitButton.disabled = false;
+      return;
+    }
+
+    const newGame = {
+      title,
+      body: initialConfig,
+    };
     addGame(newGame).then(() => {
-      // Clear the form and update the list of games
-      setTitle("");
-      setBody("");
-      window.location.reload(); // Refresh the page to get the updated list of games
+      window.location.reload();
     });
   };
+
+  function setInitialConfigFromChild(config) {
+    setInitialConfig(config);
+    setShowInitialConfigError(false);
+  }
 
   return (
     <form className="game-form" onSubmit={handleSubmit}>
@@ -34,20 +52,17 @@ export default function GameForm() {
           required
         />
       </div>
-      <div className="form-input">
-        <label htmlFor="body" className="form-label">
-          Body:
-        </label>
-        <textarea
-          className="my-input"
-          name="body"
-          id="body"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          required
-        />
+      <GameOLife setInitialConfig={setInitialConfigFromChild} />
+      <div className="initial-config-error">
+        {showInitialConfigError && (
+          <p>Please set an initial configuration before submitting the form.</p>
+        )}
       </div>
-      <button className="add-button" type="submit">
+      <button
+        className="add-button"
+        type="submit"
+        disabled={initialConfig === ""}
+      >
         Add Game
       </button>
     </form>
