@@ -6,6 +6,7 @@ import {
 } from "../../modules/gameManager";
 import GameForm from "./GameForm";
 import { addGameTag, getAllTags } from "../../modules/tagManager";
+import GameToPlay from "./GameToPlay";
 
 
 
@@ -122,7 +123,7 @@ export default function UserGames() {
                 // Render the game information if this is not the editable game
                 <>
                   <h2 className="game-title">{game.title}</h2>
-                  <p className="game-body">{game.body}</p>
+                  <GameToPlay initialConfig={game.body} />
                   <button
                     type="button"
                     className="edit-button"

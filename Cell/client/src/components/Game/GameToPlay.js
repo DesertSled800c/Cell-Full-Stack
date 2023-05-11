@@ -35,39 +35,18 @@ const GameToPlay = ({ initialConfig }) => {
 
   const handleBoardClick = (event) => {
     const { clientX, clientY } = event;
-    const { left, top } = canvasRef.current.getBoundingClientRect();
+    const { left, top } = event.currentTarget.getBoundingClientRect();
 
-    const canvasX = clientX - left;
-    const canvasY = clientY - top;
+    const x = Math.floor((clientX - left) / CELL_SIZE);
+    const y = Math.floor((clientY - top) / CELL_SIZE);
 
-    const cellX = Math.floor(canvasX / CELL_SIZE);
-    const cellY = Math.floor(canvasY / CELL_SIZE);
-
-    const newBoard = [...board];
-    newBoard[cellY][cellX] = !newBoard[cellY][cellX];
-    setBoard(newBoard);
-  };
-
-  const handleClear = () => {
-    const newBoard = Array.from({ length: HEIGHT }, () =>
-      Array.from({ length: WIDTH }, () => false)
+    const newBoard = board.map((row, i) =>
+      i === y ? row.map((cell, j) => (j === x ? !cell : cell)) : row
     );
     setBoard(newBoard);
-    setGeneration(0);
-    setRunning(false);
-    clearInterval(intervalId);
-    setIntervalId(null);
   };
 
-  const handleRandom = () => {
-    const newBoard = Array.from({ length: HEIGHT }, () =>
-      Array.from({ length: WIDTH }, () => Math.random() > 0.7)
-    );
-    setBoard(newBoard);
-    setGeneration(0);
-  };
-
-  const handleRun = () => {
+  const handleStart = () => {
     setRunning(true);
   };
 
@@ -85,12 +64,38 @@ const GameToPlay = ({ initialConfig }) => {
     }
   };
 
-  const handleIntervalChange = (event) => {
-    setSpeed(event.target.value);
+  const handleRandom = () => {
+    const newBoard = Array.from({ length: HEIGHT }, () =>
+      Array.from({ length: WIDTH }, () => Math.random() > 0.7)
+    );
+    setBoard(newBoard);
+    setGeneration(0);
   };
 
-  const handleRandomConfigChange = (event) => {
-    setRandomConfig(event.target.checked);
+  const handleClear = () => {
+    const newBoard = Array.from({ length: HEIGHT }, () =>
+      Array.from({ length: WIDTH }, () => false)
+    );
+    setBoard(newBoard);
+    setGeneration(0);
+    setRunning(false);
+    clearInterval(intervalId);
+    setIntervalId(null);
+  };
+
+  const handleSpeedChange = (event) => {
+    const newSpeed = Number(event.target.value);
+    setSpeed(newSpeed);
+    if (runningRef.current) {
+      handleStop();
+      handleStart();
+    }
+  };
+
+  const handleRandomConfigChange = () => {
+    const newBoard = board.map((row) => row.map(() => Math.random() < 0.5));
+    setBoard(newBoard);
+    setRandomConfig(true);
   };
 
   useEffect(() => {
@@ -124,10 +129,10 @@ const GameToPlay = ({ initialConfig }) => {
     const renderBoard = () => {
       ctx.clearRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
 
-      ctx.fillStyle = "#aaaaaa";
+      ctx.fillStyle = "#DE3163";
       ctx.fillRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
 
-      ctx.fillStyle = "#FFFFFF";
+      ctx.fillStyle = "#FFBF00";
       board.forEach((row, y) =>
         row.forEach((alive, x) => {
           if (alive) {
@@ -136,7 +141,7 @@ const GameToPlay = ({ initialConfig }) => {
         })
       );
 
-      ctx.strokeStyle = "#bbbbbb";
+      ctx.strokeStyle = "#FFBF00";
       for (let x = 0; x <= WIDTH * CELL_SIZE; x += CELL_SIZE) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -204,30 +209,25 @@ const GameToPlay = ({ initialConfig }) => {
   return (
     <div className="game-container">
       <div className="game-header">
-        <h1>Conway's Game of Life</h1>
-        <div className="game-controls">
-          <button onClick={handleRun}>Run</button>
+        <div className="controls">
+          <button onClick={handleStart}>Start</button>
           <button onClick={handleStop}>Stop</button>
-          <button onClick={handleSingleStep}>Step</button>
           <button onClick={handleClear}>Clear</button>
-          <label htmlFor="interval">Interval: {speed} </label>
+          <button className="random-btn" onClick={handleRandomConfigChange}>
+            Random
+          </button>
+          <button onClick={handleSingleStep}>Step</button>
+          <label htmlFor="speed">Speed:</label>
           <input
+            className="speed-input"
             type="range"
+            name="speed"
+            id="speed"
             min="1"
             max="10"
             value={speed}
-            onChange={handleIntervalChange}
-            id="interval"
+            onChange={handleSpeedChange}
           />
-          <div className="random-config">
-            <input
-              type="checkbox"
-              id="random-config"
-              checked={randomConfig}
-              onChange={handleRandomConfigChange}
-            />
-            <label htmlFor="random-config">Random Configuration</label>
-          </div>
         </div>
       </div>
       <canvas
