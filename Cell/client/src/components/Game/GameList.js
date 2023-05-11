@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllGames } from "../../modules/gameManager";
+import GameToPlay from "./GameToPlay";
+
 
 export default function GameList() {
   const [games, setGames] = useState([]);
@@ -14,8 +16,8 @@ export default function GameList() {
       <section className="game-section">
         {games.map((game) => (
           <div key={game.id} className="game-card">
-            <h2 className="game-title">Title: {game.title}</h2>
-            <p className="game-body">Body: {game.body}</p>
+            <h2 className="game-title">{game.title}</h2>
+            <GameToPlay initialConfig={game.body} />
             {game.tags && (
               <div className="tag-list">
                 <ul className="tag-list-ul">

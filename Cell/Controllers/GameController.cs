@@ -60,7 +60,7 @@ namespace Cell.Controllers
             if (id != game.Id)
             {
                 return BadRequest();
-            }
+            } // REmove this immediately
 
             _gameRepository.Update(game);
             return NoContent();

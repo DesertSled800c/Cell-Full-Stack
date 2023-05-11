@@ -377,3 +377,135 @@ label {
 .navbar-nav {
     color: rgb(203, 91, 91);
 }
+
+/* Game board */
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+  grid-gap: 1px;
+  background-color: #333;
+}
+/* Game board */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+  grid-gap: 1px;
+  background-color: #333;
+}
+
+/* Cell styles */
+.game-cell {
+  background-color: #fff;
+  width: 10px;
+  height: 10px;
+}
+
+.game-cell.alive {
+  background-color: #000;
+}
+
+/* Cell styles */
+.cell {
+  background-color: #fff;
+}
+
+.cell.alive {
+  background-color: #000;
+}
+
+/* Game controls */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-group {
+  margin-bottom: 2rem;
+}
+
+.start-btn {
+  margin-right: 0.5rem;
+}
+
+/* Speed select */
+.speed-label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.speed-select {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.fast {
+  color: green;
+}
+
+.medium {
+  color: orange;
+}
+
+.slow {
+  color: red;
+}
+
+/* Random control input */
+.random-label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.random-input {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* Side length input */
+.side-label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.side-input {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+
+.cell {
+  background-color: rgb(191, 45, 45);
+}
+
+.cell.alive {
+  background-color: rgb(255, 182, 12);
+}
+
+.board-container {
+  display: grid;
+  grid-template-columns: repeat(50, 1fr);
+  grid-template-rows: repeat(50, 1fr);
+  border: 1px solid black;
+  width: 500px;
+  height: 500px;
+}
+
