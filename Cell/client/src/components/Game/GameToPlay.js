@@ -26,6 +26,7 @@ const GameToPlay = ({ initialConfig }) => {
   const [randomConfig, setRandomConfig] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [speed, setSpeed] = useState(5);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const runningRef = useRef(running);
   runningRef.current = running;
@@ -34,6 +35,8 @@ const GameToPlay = ({ initialConfig }) => {
   generationRef.current = generation;
 
   const handleBoardClick = (event) => {
+    event.stopPropagation();
+
     const { clientX, clientY } = event;
     const { left, top } = event.currentTarget.getBoundingClientRect();
 
@@ -206,6 +209,16 @@ const GameToPlay = ({ initialConfig }) => {
     return neighbors;
   };
 
+  const handleFullscreenToggle = () => {
+    const canvas = canvasRef.current;
+
+    if (!isFullscreen) {
+      canvas.requestFullscreen();
+    }
+
+    setIsFullscreen(!isFullscreen);
+  };
+
   return (
     <div className="game-container">
       <div className="game-header">
@@ -217,6 +230,9 @@ const GameToPlay = ({ initialConfig }) => {
             Random
           </button>
           <button onClick={handleSingleStep}>Step</button>
+          <button onClick={handleFullscreenToggle}>
+            {isFullscreen ? "Fullscreen" : "Fullscreen"}
+          </button>
           <label htmlFor="speed">Speed:</label>
           <input
             className="speed-input"
