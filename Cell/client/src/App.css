@@ -421,7 +421,7 @@ label {
 
 .game-board {
   border: 1px solid #bbbbbb;
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 .game-board::before {
@@ -546,7 +546,7 @@ label {
   font-size: 1.3rem;
   line-height: 1.5;
   margin-bottom: 10px;
-  color: #dd55b4;color: #cb24bd;
+  color: #c857a6;
 }
 
 .image {
@@ -567,4 +567,13 @@ label {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
 }
