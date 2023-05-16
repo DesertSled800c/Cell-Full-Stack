@@ -4,13 +4,13 @@ const CELL_SIZE = 10;
 const WIDTH = 50;
 const HEIGHT = 50;
 
-const GameOfLife = ({ setInitialConfig }) => {
+const GameOLife = ({ setInitialConfig }) => {
   const [board, setBoard] = useState(() =>
     Array.from({ length: HEIGHT }, () =>
       Array.from({ length: WIDTH }, () => false)
     )
   );
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(false); 
   const [generation, setGeneration] = useState(0);
   const [randomConfig, setRandomConfig] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
@@ -259,4 +259,4 @@ const GameOfLife = ({ setInitialConfig }) => {
   );
 };
 
-export default GameOfLife;
+export default GameOLife;

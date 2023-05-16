@@ -13,6 +13,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
+    "react-three-fiber": "^6.0.13",
     "reactstrap": "^9.1.9",
     "web-vitals": "^2.1.4"
   },

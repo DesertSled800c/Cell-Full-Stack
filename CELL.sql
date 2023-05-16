@@ -10,28 +10,28 @@ CREATE TABLE [Game] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [UserId] int NOT NULL,
   [Title] nvarchar(255) NOT NULL,
-  [Body] nvarchar(255) NOT NULL
+  [Body] varchar(max) NOT NULL
 )
 GO
 
-CREATE TABLE [Topic] (
+CREATE TABLE [Tag] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Topic] nvarchar(255) NOT NULL
+  [Name] nvarchar(255) NOT NULL
 )
 GO
 
-CREATE TABLE [GameTopic] (
+CREATE TABLE [GameTag] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [GameId] int NOT NULL,
-  [TopicId] int NOT NULL
+  [TagId] int NOT NULL
 )
 GO
 
 ALTER TABLE [Game] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [GameTopic] ADD FOREIGN KEY ([TopicId]) REFERENCES [Topic] ([Id])
+ALTER TABLE [GameTag] ADD FOREIGN KEY ([TagId]) REFERENCES [Tag] ([Id])
 GO
 
-ALTER TABLE [GameTopic] ADD FOREIGN KEY ([GameId]) REFERENCES [Game] ([Id]) ON DELETE CASCADE
+ALTER TABLE [GameTag] ADD FOREIGN KEY ([GameId]) REFERENCES [Game] ([Id]) ON DELETE CASCADE
 GO
