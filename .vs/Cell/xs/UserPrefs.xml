@@ -1,0 +1,5 @@
+﻿<Properties StartupConfiguration="{CDFEB37D-7A91-484A-8CF3-404B7BF60095}|Default">
+  <MonoDevelop.Ide.ItemProperties.Cell PreferredExecutionTarget="/Applications/Brave Browser.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
