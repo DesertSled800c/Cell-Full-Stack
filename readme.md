@@ -3,6 +3,7 @@
 Here is a video describing how to run docker in a container:
 [video](https://www.youtube.com/watch?v=QqZr6cbKoIM)
 
+
 N.B. Instead of following the video exactly we want to just create the dockerfile, then:
 
 ```docker build -f Dockerfile -t cell .```
@@ -18,6 +19,7 @@ This command instructs docker to runner our app in a container defined by the im
 All of this can be found in [dockers docs](https://docs.docker.com/engine/reference/commandline/run/)
 
 
+
 Next, we need to figure out how we'd like to deploy our container, instructions for which are here:
 [deploy dotnet on heroku](https://dev.to/alrobilliard/deploying-net-core-to-heroku-1lfe)
 
@@ -26,3 +28,4 @@ From there, we can start thinking about a build and deploy pipeline. This is rel
 Using a build and deploy pipeline, we can push code changes to git and have all our unit tests run automatically, which will tell us if there are any problems with our code changes. Then this pipleline, if tests are passing, will automatically build a new version of our app in a docker container and then deploy that to our platform of choice. 
 
 Easy-peazy!
+
