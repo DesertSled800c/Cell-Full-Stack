@@ -29,13 +29,17 @@ CELL is a full-stack application that simulates and displays [Conway's Game of L
 4. Run the `.sql` file located in the backend project to create the database
 
 5. [Set up a Firebase project and configure the authentication]
+   
+6. To install Firebase 8.7.1, run the following command in the terminal:
 
-6. Update the `appsettings.json` file in the backend project with your Firebase project ID:
+npm install firebase@8.7.1
+
+7. Update the `appsettings.json` file in the backend project with your Firebase project ID:
    {
      "FirebaseProjectId": "your-firebase-project-id"
    }
    
-7. Create a `.env` file in the `client` folder with your Firebase API key:
+8. Create a `.env` file in the `client` folder with your Firebase API key:
    { 
      REACT_APP_API_KEY="your-api-key"
    }
@@ -51,7 +55,6 @@ CELL is a full-stack application that simulates and displays [Conway's Game of L
    
 2. Start the frontend development server:
   
-   cd client
    npm start
   
 ### Backend
