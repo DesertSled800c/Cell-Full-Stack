@@ -20,48 +20,43 @@ CELL is a full-stack application that simulates and displays [Conway's Game of L
 ### Steps
 
 1. Clone the repository:
-   ```
    git clone https://github.com/DesertSled800c/Cell-Full-Stack
-   ``````
-2. Install frontend dependencies:
-   ```
-   cd CELL/client
-   npm install
-   ````
-3. Open the `cell.sln` file in Visual Studio
+  
+2. Open the `cell.sln` file in Visual Studio
 
-4. In Visual Studio, restore NuGet packages for the backend project
+3. In Visual Studio, restore NuGet packages for the backend project
 
-5. Run the `.sql` file located in the backend project to create the database
+4. Run the `.sql` file located in the backend project to create the database
 
-6. [Set up a Firebase project and configure the authentication](https://firebase.google.com/docs/web/setup)
+5. [Set up a Firebase project and configure the authentication](https://firebase.google.com/docs/web/setup)
 
-7. Update the `appsettings.json` file in the backend project with your Firebase project ID:
-   ````json
+6. Update the `appsettings.json` file in the backend project with your Firebase project ID:
    {
      "FirebaseProjectId": "your-firebase-project-id"
    }
-   ```
+   
+7. Create a `.env` file in the `client` folder with your Firebase API key:
+   { 
+     REACT_APP_API_KEY="your-api-key"
+   }
 
-8. Create a `.env` file in the `client` folder with your Firebase API key:
-   ````
-   REACT_APP_API_KEY="your-api-key"
-   ```
-
-   9. In Visual Studio, run the backend project to start the API server and open the Swagger UI.
 ## Usage
 
 ### Frontend
 
-1. Start the frontend development server:
-   ````
+1. Install frontend dependencies:
+  
+   cd CELL/client
+   npm install
+   
+2. Start the frontend development server:
+  
    cd client
    npm start
-   ```
-
+  
 ### Backend
 
-1. In Visual Studio, start the backend API server by running the project
+1. In Visual Studio, run the backend project to start the API server and open the Swagger UI.
 
 Now you can access the application at `http://localhost:3000` and interact with the backend API at `http://localhost:5000`.
 
