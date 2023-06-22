@@ -28,7 +28,7 @@ CELL is a full-stack application that simulates and displays [Conway's Game of L
 
 4. Run the `.sql` file located in the backend project to create the database
 
-5. [Set up a Firebase project and configure the authentication](https://firebase.google.com/docs/web/setup)
+5. [Set up a Firebase project and configure the authentication]
 
 6. Update the `appsettings.json` file in the backend project with your Firebase project ID:
    {
