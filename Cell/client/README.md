@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+```markdown
+# CELL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CELL is a full-stack application that simulates and displays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). The application features a list of predefined game configurations and allows users to interact with the simulation. Registered users can also create, read, update, and delete their game configurations. The frontend is built using React.js, while the backend is built with ASP.NET Core Web API, .NET 5, and Swagger. The app also uses Firebase for user authentication and a SQL database.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Features](#features)
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Node.js](https://nodejs.org/) (latest LTS version recommended)
+- [Visual Studio](https://visualstudio.microsoft.com/downloads/) (latest version recommended)
+- [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 
-### `npm test`
+### Steps
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```
+   git clone https://github.com/DesertSled800c/Cell-Full-Stack
+   ``````
+2. Install frontend dependencies:
+   ```
+   cd CELL/client
+   npm install
+   ````
+3. Open the `cell.sln` file in Visual Studio
 
-### `npm run build`
+4. In Visual Studio, restore NuGet packages for the backend project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. Run the `.sql` file located in the backend project to create the database
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+6. [Set up a Firebase project and configure the authentication](https://firebase.google.com/docs/web/setup)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+7. Update the `appsettings.json` file in the backend project with your Firebase project ID:
+   ````json
+   {
+     "FirebaseProjectId": "your-firebase-project-id"
+   }
+   ```
 
-### `npm run eject`
+8. Create a `.env` file in the `client` folder with your Firebase API key:
+   ````
+   REACT_APP_API_KEY="your-api-key"
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   9. In Visual Studio, run the backend project to start the API server and open the Swagger UI.
+## Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Start the frontend development server:
+   ````
+   cd client
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Backend
 
-## Learn More
+1. In Visual Studio, start the backend API server by running the project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Now you can access the application at `http://localhost:3000` and interact with the backend API at `http://localhost:5000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Features
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Simulate and display Conway's Game of Life
+- Predefined game configurations for users to choose from
+- User authentication with Firebase
+- Registered users can create, read, update, and delete their game configurations
+- Responsive user interface built with React.js
+- Backend API built with ASP.NET Core and .NET 5
+- API documentation using Swagger
+- SQL database for storing game configurations
+```
