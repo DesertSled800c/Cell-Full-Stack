@@ -1,4 +1,3 @@
-```markdown
 # CELL
 
 CELL is a full-stack application that simulates and displays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). The application features a list of predefined game configurations and allows users to interact with the simulation. Registered users can also create, read, update, and delete their game configurations. The frontend is built using React.js, while the backend is built with ASP.NET Core Web API, .NET 5, and Swagger. The app also uses Firebase for user authentication and a SQL database.
@@ -73,4 +72,3 @@ Now you can access the application at `http://localhost:3000` and interact with 
 - Backend API built with ASP.NET Core and .NET 5
 - API documentation using Swagger
 - SQL database for storing game configurations
-```
