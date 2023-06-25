@@ -1,0 +1,32 @@
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["Cell/Cell.csproj", "Cell/"]
+RUN dotnet restore "Cell/Cell.csproj"
+COPY . .
+WORKDIR "/src/Cell"
+RUN dotnet build "Cell.csproj" -c Release -o /app/build
+
+FROM node:12-alpine as build-node
+WORKDIR client
+COPY Cell/client/package.json .
+COPY Cell/client/package-lock.json .
+RUN npm install
+COPY Cell/client/ .
+RUN npm run build
+
+FROM build AS publish
+RUN dotnet publish "Cell.csproj" -c Release -o /app/publish 
+RUN dotnet dev-certs https --trust
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+COPY --from=build-node /client/build ./client/build
+ENTRYPOINT ["dotnet", "Cell.dll"]
+
+

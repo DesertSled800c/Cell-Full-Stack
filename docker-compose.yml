@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+
+  # UI Container spec. note that 'ui' is the name of the container internally (also 'container_name')
+  ui:
+    container_name: cell-ui
+    image: cell-ui
+    build: 
+      context: ./Cell/client
+      dockerfile: Dockerfile.ui
+    volumes: 
+      - ./:/app  # Mount these as volumes so we can watch them. 
+      - /:/node_modules  # I think this was so it didn't overwrite or copy or something...
+    ports: 
+      - 3000:3000
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: cell-db
+    cap_add: [ 'SYS_PTRACE' ]
+    environment:
+      - "ACCEPT_EULA=1"
+      - "MSSQL_SA_PASSWORD=SU2orange!"
+    ports:
+      - 1433:1433
+    hostname: mssql
+
+  # API container spec.
+  api:
+    container_name: cell-api
+    image: cell-api
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # ASPNETCORE_URLS: http://+:5555
+    ports: 
+      - 5000:80
